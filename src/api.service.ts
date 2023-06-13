@@ -13,7 +13,7 @@ let todos: Todo[] = Array.from({ length: 3 }, (_, id) => ({
 
 @Injectable({ providedIn: 'root' })
 export class ApiService {
-  getTodos(search: string) {
+  getTodos(search?: string | null) {
     if (!search) {
       return timer(1000).pipe(map(() => todos));
     }

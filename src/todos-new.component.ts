@@ -1,39 +1,46 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  inject,
-  OnDestroy,
-  OnInit,
-} from '@angular/core';
-import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { ApiService, Todo } from './api.service';
+import { AsyncPipe, NgIf } from '@angular/common';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { defer } from 'rxjs';
+import { TodosNewStateService, TodoViewModel } from './todos-new-state.service';
+import TodosComponent from './todos.component';
 
 @Component({
   selector: 'app-todos-new',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [],
-  providers: [],
-  styles: [],
-  template: ``,
+  imports: [NgIf, AsyncPipe, TodosComponent],
+  providers: [TodosNewStateService],
+  template: `
+    <app-todos
+      *ngIf="viewModel$ | async as viewModel"
+      [search]="viewModel.search"
+      [todos]="viewModel.todos"
+      [loadingStatus]="viewModel.loadingStatus"
+      [addStatus]="viewModel.addStatus"
+      (searchChange)="searchTodos($event)"
+      (toggleTodoIsSelected)="toggleTodoIsSelected($event)"
+      (addTodo)="addTodo($event)"
+    />
+  `,
 })
 export default class TodosNewComponent {
-  todos: Todo[] = [];
+  viewModel$ = defer(() => this.todosNewStateService.viewModel$);
 
-  private apiService = inject(ApiService);
-  private router = inject(Router);
-  private subscription = new Subscription();
+  private todosNewStateService = inject(TodosNewStateService);
 
-  ngOnInit() {
-    const subscription = this.apiService.getTodos().subscribe((todos) => {
-      this.todos = todos;
-    });
+  // constructor() {
+  //   this.viewModel$ = this.todosNewStateService.viewModel$;
+  // }
 
-    this.subscription.add(subscription);
+  toggleTodoIsSelected(todo: TodoViewModel) {
+    this.todosNewStateService.toggleTodoIsSelected(todo);
   }
 
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
+  searchTodos(search: string | undefined | null) {
+    this.todosNewStateService.searchTodos(search);
+  }
+
+  addTodo(title: string) {
+    this.todosNewStateService.addTodo(title);
   }
 }
