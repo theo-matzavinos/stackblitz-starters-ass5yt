@@ -6,11 +6,14 @@ import {
   Input,
   Output,
 } from '@angular/core';
+import { ReadonlyDeep } from 'type-fest';
 import { AddTodoComponent } from './add-todo.component';
+import { Todo } from './api.service';
 import { AsyncStatus } from './async-status';
 import { TodosListComponent } from './todos-list.component';
-import { TodoViewModel } from './todos-new-state.service';
 import { TodosSearchComponent } from './todos-search.component';
+
+export type TodoViewModel = ReadonlyDeep<Todo & { isSelected?: boolean }>;
 
 @Component({
   selector: 'app-todos',
@@ -34,7 +37,7 @@ import { TodosSearchComponent } from './todos-search.component';
     </ng-container>
   `,
 })
-export default class TodosComponent {
+export class TodosComponent {
   @Input({ required: true }) search?: string | null;
   @Input({ required: true }) todos!: readonly TodoViewModel[];
   @Input({ required: true }) loadingStatus!: AsyncStatus;

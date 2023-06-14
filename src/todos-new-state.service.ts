@@ -15,6 +15,7 @@ import {
 import { ReadonlyDeep } from 'type-fest';
 import { ApiService, Todo } from './api.service';
 import { AsyncStatus } from './async-status';
+import { TodoViewModel } from './todos.component';
 
 type TodosNewState = ReadonlyDeep<{
   todos: Todo[];
@@ -32,7 +33,6 @@ const initialState: TodosNewState = {
   selectedIds: [],
 };
 
-export type TodoViewModel = ReadonlyDeep<Todo & { isSelected?: boolean }>;
 
 export type TodosNewViewModel = ReadonlyDeep<{
   todos: TodoViewModel[];

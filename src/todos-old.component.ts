@@ -1,17 +1,10 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  inject,
-  OnDestroy,
-  OnInit,
-} from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { catchError, EMPTY, map, Subscription, switchMap, tap } from 'rxjs';
 import { ApiService, Todo } from './api.service';
 import { AsyncStatus } from './async-status';
-import { TodoViewModel } from './todos-new-state.service';
-import TodosComponent from './todos.component';
+import { TodosComponent, TodoViewModel } from './todos.component';
 
 @Component({
   selector: 'app-todos-old',

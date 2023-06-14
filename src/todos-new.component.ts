@@ -1,8 +1,8 @@
 import { AsyncPipe, NgIf } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { defer } from 'rxjs';
-import { TodosNewStateService, TodoViewModel } from './todos-new-state.service';
-import TodosComponent from './todos.component';
+import { TodosNewStateService } from './todos-new-state.service';
+import { TodosComponent, TodoViewModel } from './todos.component';
 
 @Component({
   selector: 'app-todos-new',
