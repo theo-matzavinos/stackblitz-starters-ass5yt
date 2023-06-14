@@ -6,7 +6,7 @@ import {
   Input,
   Output,
 } from '@angular/core';
-import { TodoViewModel } from './todos-new-state.service';
+import { TodoViewModel } from './todos.component';
 
 @Component({
   selector: 'app-todos-list',
